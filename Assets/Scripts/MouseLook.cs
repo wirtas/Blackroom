@@ -7,7 +7,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 100f;
     [SerializeField] private Transform playerBody;
     
-    private float _xRotation = 0f;
+    float _xRotation = 0f;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

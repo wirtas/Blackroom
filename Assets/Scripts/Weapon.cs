@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -5,18 +6,18 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform fireOrigin;
+    [SerializeField] private ParticleSystem boom;
     [SerializeField] private int maxBombs = 3; // Quantity of possible active bombs
-    private short activeBombsCounter;
-    private GameObject[] activeBombs = new GameObject[3];
+    private List<GameObject> activeBombs = new List<GameObject>();
     
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && (activeBombsCounter < maxBombs))
+        if (Input.GetButtonDown("Fire1") && (activeBombs.Count < maxBombs))
         {
             Shoot();
         }
 
-        if (Input.GetButtonDown("Fire2") && (activeBombsCounter >= 1))
+        if (Input.GetButtonDown("Fire2") && (activeBombs.Count >= 1))
         {
             Boom();
         }
@@ -24,25 +25,21 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        
-        activeBombs[activeBombsCounter] = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
-        activeBombsCounter++;
-        Debug.Log(activeBombsCounter.ToString());
+        GameObject bullet = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
+        activeBombs.Add(bullet);
+        Debug.Log(activeBombs.Count.ToString());
     }
 
     private void Boom()
     {
-        //TODO potezny wybuch lamiacy duze drzewa i kolyszacy trzcina
-
-
-        if (activeBombsCounter <= 0) return;
+        //potezny wybuch lamiacy duze drzewa i kolyszacy trzcina
+        if (activeBombs.Count <= 0) return;
         
         foreach (GameObject b in activeBombs)
         {
-           Destroy(b);
+            Instantiate(boom, b.transform.position, b.transform.rotation);
+            Destroy(b);
         }
-
-        activeBombsCounter = 0;
-
+        activeBombs.Clear();
     }
 }

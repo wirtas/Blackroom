@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
     private void Boom()
     {
         //TODO potezny wybuch lamiacy duze drzewa i kolyszacy trzcina
-
+        
 
         if (activeBombsCounter <= 0) return;
         

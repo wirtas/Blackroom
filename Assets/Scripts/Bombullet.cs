@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Bombullet : MonoBehaviour
@@ -18,6 +17,5 @@ public class Bombullet : MonoBehaviour
 
         rb.velocity = Vector3.zero;
         gameObject.transform.SetParent(hitInfo.transform);
-
     }
 }

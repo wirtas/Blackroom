@@ -28,7 +28,6 @@ public class Weapon : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
         activeBombs.Add(bullet);
-        Debug.Log(activeBombs.Count.ToString());
     }
 
     private void Boom()
@@ -38,6 +37,7 @@ public class Weapon : MonoBehaviour
         
         foreach (GameObject b in activeBombs)
         {
+            if (b == null) continue;
             Instantiate(boom, b.transform.position, b.transform.rotation);
             Destroy(b);
         }

@@ -24,7 +24,7 @@ public class EnemyBullet : MonoBehaviour
         Debug.Log($"Enemy{hitInfo.name}");
         if (hitInfo.CompareTag("Enemy")) return;
 
-        rb.velocity = Vector3.zero;
+        Destroy(gameObject);
     }
 
     private void Update()

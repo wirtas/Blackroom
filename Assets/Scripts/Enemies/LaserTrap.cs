@@ -4,7 +4,7 @@ public class LaserTrap : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 5;
     private float timeElapsed;
-    void Update()
+    private void Update()
     {
         if (0.01f < timeElapsed)
         {
@@ -12,5 +12,15 @@ public class LaserTrap : MonoBehaviour
             timeElapsed = 0;
         }
         timeElapsed += Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider hitInfo)
+    {
+        Debug.Log($"Enemy{hitInfo.name}");
+        if (hitInfo.CompareTag("Player"))
+        {
+            Player player = hitInfo.transform.GetComponent<Player>();
+            player.Health -= 1;
+        }
     }
 }

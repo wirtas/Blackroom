@@ -1,20 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Canon : MonoBehaviour
+public class Canon : Enemy
 {
     [SerializeField] private EnemyBullet bulletPrefab;
     [SerializeField] private Transform fireOrigin;
     [SerializeField] private float shootDelayTime;
     [SerializeField] private float range = 10f;
+    [SerializeField] private int maxHealth = 10;
 
     private Transform playerPosition;
     private Vector3 muzzle;
     private float timeElapsed = 0;
+
+    
     private void Start()
     {
+        MaxHealth = maxHealth;
+        Health = MaxHealth;
+        Title = "Canon";
         Player player = FindObjectOfType<Player>();
         playerPosition = player.transform;
         muzzle = fireOrigin.position;

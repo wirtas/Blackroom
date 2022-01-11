@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 { 
@@ -15,16 +13,23 @@ public class EnemyBullet : MonoBehaviour
     {
         this.direction = direction;
     }
-    void Start()
+    private void Start()
     {
         rb.velocity = direction * speed;
     }
     private void OnTriggerEnter(Collider hitInfo)
     {
-        Debug.Log($"Enemy{hitInfo.name}");
-        if (hitInfo.CompareTag("Enemy")) return;
-
+        if (hitInfo.CompareTag("Player"))
+        {
+            Player player = hitInfo.transform.GetComponent<Player>();
+            player.Health -= 1;
+        }
+        else if (hitInfo.CompareTag("Enemy")){
+            return;
+        }
+        
         Destroy(gameObject);
+        
     }
 
     private void Update()

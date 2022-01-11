@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Bombullet bulletPrefab;
     [SerializeField] private Transform fireOrigin;
     [SerializeField] private ParticleSystem boom;
     [SerializeField] private int maxBombs = 3; // Quantity of possible active bombs
-    private List<GameObject> activeBombs = new List<GameObject>();
+    private List<Bombullet> activeBombs = new List<Bombullet>();
     
     void Update()
     {
@@ -25,9 +24,8 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
-        activeBombs.Add(bullet);
-        Debug.Log(activeBombs.Count.ToString());
+        Bombullet clone = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
+        activeBombs.Add(clone);
     }
 
     private void Boom()
@@ -35,11 +33,14 @@ public class Weapon : MonoBehaviour
         //potezny wybuch lamiacy duze drzewa i kolyszacy trzcina
         if (activeBombs.Count <= 0) return;
         
-        foreach (GameObject b in activeBombs)
+        foreach (Bombullet b in activeBombs)
         {
+            if (b == null) continue;
             Instantiate(boom, b.transform.position, b.transform.rotation);
-            Destroy(b);
+            if (b.bombParent != null) b.bombParent.Health -= 1;
+            Destroy(b.gameObject);
         }
         activeBombs.Clear();
     }
+    
 }

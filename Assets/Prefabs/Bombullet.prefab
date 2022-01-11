@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7176576762267301773}
   m_Layer: 0
   m_Name: Bombullet
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8026121085758424010}
   speed: 15
+  bombParent: {fileID: 0}
 --- !u!54 &8026121085758424010
 Rigidbody:
   m_ObjectHideFlags: 0

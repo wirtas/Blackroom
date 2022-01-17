@@ -5,13 +5,14 @@ public class EnemyBullet : MonoBehaviour
     [SerializeField] private Rigidbody rb; 
     [SerializeField] private float speed = 15f; // Bullet speed
     [SerializeField] private float activeTime = 20f;
-
+    [SerializeField] private int damage = 1;
+    
     private Vector3 direction;
     private float timeElapsed;
 
-    public void Init(Vector3 direction)
+    public void Init(Vector3 dir)
     {
-        this.direction = direction;
+        this.direction = dir;
     }
     private void Start()
     {
@@ -19,17 +20,16 @@ public class EnemyBullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider hitInfo)
     {
-        if (hitInfo.CompareTag("Player"))
+        if (hitInfo.CompareTag("Player")) 
         {
             Player player = hitInfo.transform.GetComponent<Player>();
-            player.Health -= 1;
+            player.GetHit(damage);
         }
-        else if (hitInfo.CompareTag("Enemy")){
+        else if (hitInfo.CompareTag("Enemy"))
+        {
             return;
         }
-        
         Destroy(gameObject);
-        
     }
 
     private void Update()

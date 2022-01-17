@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Canon : Enemy
+public class EnemyCanon : Enemy
 {
     [SerializeField] private EnemyBullet bulletPrefab;
     [SerializeField] private Transform fireOrigin;
@@ -10,7 +10,7 @@ public class Canon : Enemy
 
     private Transform playerPosition;
     private Vector3 muzzle;
-    private float timeElapsed = 0;
+    private float timeElapsed;
 
     
     private void Start()
@@ -37,7 +37,6 @@ public class Canon : Enemy
     private void Shoot()
     {
         Vector3 direction = (playerPosition.position - muzzle).normalized;
-        Debug.DrawRay(muzzle, direction, Color.red, 1f);
         EnemyBullet bullet = Instantiate(bulletPrefab, muzzle, Quaternion.LookRotation(direction));
         bullet.Init(direction);
     }

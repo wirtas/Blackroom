@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class PlayerWeapon : MonoBehaviour
 {
-    [SerializeField] private Bombullet bulletPrefab;
+    [SerializeField] private PlayerBullet bulletPrefab;
     [SerializeField] private Transform fireOrigin;
     [SerializeField] private ParticleSystem boom;
     [SerializeField] private int maxBombs = 3;
     [SerializeField] private Material activeAmmo, emptyAmmo;
     [SerializeField] private GameObject[] ammo;
     
-    private List<Bombullet> activeBombs = new List<Bombullet>();
+    private List<PlayerBullet> activeBombs = new List<PlayerBullet>();
 
     private void Update()
-    { 
+    {
         Shoot(); //LPM
         Boom();  //PPM
     }
@@ -22,7 +22,7 @@ public class Weapon : MonoBehaviour
     {
         if (!Input.GetButtonDown("Fire1") || (activeBombs.Count >= maxBombs)) return;
         
-        Bombullet clone = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
+        PlayerBullet clone = Instantiate(bulletPrefab, fireOrigin.position, fireOrigin.rotation);
         activeBombs.Add(clone);
         ChangeAmmo(activeBombs, false);
     }
@@ -31,11 +31,19 @@ public class Weapon : MonoBehaviour
     {
         if (!Input.GetButtonDown("Fire2") || (activeBombs.Count < 1) || activeBombs.Count <= 0) return;
 
-        foreach (Bombullet b in activeBombs)
+        foreach (PlayerBullet b in activeBombs)
         {
-            if (b == null) continue;
-            Instantiate(boom, b.transform.position, b.transform.rotation);
-            if (b.bombParent != null) b.bombParent.Health -= 1;
+            if (b == null)
+            {
+                continue;
+            }
+
+            Transform t = b.transform;
+            Instantiate(boom, t.position, t.rotation);
+            if (b.BombParent != null)
+            {
+                b.BombParent.GetHit();
+            }
             Destroy(b.gameObject);
         }
 
@@ -43,9 +51,10 @@ public class Weapon : MonoBehaviour
         ChangeAmmo(activeBombs, true);
     }
 
-    private void ChangeAmmo(List<Bombullet> l, bool clear)
+    private void ChangeAmmo(List<PlayerBullet> l, bool clear)
     {
-        if(clear){ 
+        if(clear)
+        { 
             foreach (GameObject am in ammo) 
             { 
                 MeshRenderer mesh = am.GetComponent<MeshRenderer>();

@@ -98,7 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8026121085758424010}
   speed: 15
-  bombParent: {fileID: 0}
 --- !u!54 &8026121085758424010
 Rigidbody:
   m_ObjectHideFlags: 0

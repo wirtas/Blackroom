@@ -1,20 +1,18 @@
 using UnityEngine;
 
-public class Bombullet : MonoBehaviour
+public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float speed = 15f; // Bullet speed
+    [SerializeField] private float bulletSpeed = 30f;
 
-    public Enemy bombParent;
-    
-    void Start()
+    public Enemy BombParent { get; private set; }
+    private void Start()
     {
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.forward * bulletSpeed;
     }
 
     private void OnTriggerEnter(Collider hitInfo)
     {
-        Debug.Log(hitInfo.name);
         if (hitInfo.CompareTag("Player") || hitInfo.CompareTag("Weapon")) return;
 
         rb.velocity = Vector3.zero;
@@ -22,7 +20,7 @@ public class Bombullet : MonoBehaviour
 
         if (hitInfo.CompareTag("Enemy"))
         {
-            bombParent = GetComponentInParent<Enemy>();
+            BombParent = GetComponentInParent<Enemy>();
         }
     }
 }

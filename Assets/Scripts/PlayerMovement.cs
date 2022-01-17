@@ -11,19 +11,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -15f;
     [SerializeField] private float groundDistance = 0.4f;
     
-    private Vector3 _velocity;
-    private bool _isGrounded;
-    void Update()
+    private Vector3 velocity;
+    private bool isGrounded;
+    private void Update()
     {
-        _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Walk();
+    }
 
-        // VELOCITY ON GROUND RESET
-        if (_isGrounded && _velocity.y < 0)
+    private void Walk()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        //VELOCITY RESET
+        if (isGrounded && velocity.y < 0)
         {
-            _velocity.y = -2f;
+            velocity.y = -2f;
         }
         
-        //BASIC MOVEMENT
+        //MOVEMENT
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -32,12 +37,19 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(move * (speed * Time.deltaTime));
 
         //GRAVITY & JUMPING
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        
-        _velocity.y += gravity * Time.deltaTime;
-        controller.Move(_velocity * Time.deltaTime);  
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            speed *= 2f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            speed /= 2f;
+        }
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);  
     }
 }

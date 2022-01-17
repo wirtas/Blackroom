@@ -6,7 +6,6 @@ public class EnemyCanon : Enemy
     [SerializeField] private Transform fireOrigin;
     [SerializeField] private float shootDelayTime;
     [SerializeField] private float range = 10f;
-    [SerializeField] private int maxHealth = 10;
 
     private Transform playerPosition;
     private Vector3 muzzle;
@@ -15,9 +14,6 @@ public class EnemyCanon : Enemy
     
     private void Start()
     {
-        MaxHealth = maxHealth;
-        Health = MaxHealth;
-        Title = "Canon";
         Player player = FindObjectOfType<Player>();
         playerPosition = player.transform;
         muzzle = fireOrigin.position;

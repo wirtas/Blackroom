@@ -1,13 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private Material weapon;
     [SerializeField] private int initHp = 10;
+    [SerializeField] private GameObject damageTint;
+    
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     private int health = 10;
-    
-    public int Health
+
+    private int Health
     {
         get => health;
         set
@@ -24,6 +27,7 @@ public class Player : MonoBehaviour
     public void GetHit(int damage = 1)
     {
         Health -= damage;
+        StartCoroutine(GetHitTint());
     }
 
     private void SetColor(int h)
@@ -44,5 +48,17 @@ public class Player : MonoBehaviour
         {
             weapon.SetColor(EmissionColor, Color.green * 3);
         }
+    }
+
+    public void Heal()
+    {
+        Health = initHp;
+    }
+
+    IEnumerator GetHitTint()
+    {
+        damageTint.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        damageTint.SetActive(false);
     }
 }

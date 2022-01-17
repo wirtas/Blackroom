@@ -12,7 +12,7 @@ public class EnemyBullet : MonoBehaviour
 
     public void Init(Vector3 dir)
     {
-        this.direction = dir;
+        direction = dir;
     }
     private void Start()
     {

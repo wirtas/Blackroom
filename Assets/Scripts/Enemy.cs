@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-
+    [SerializeField] private int maxHealth;
+    [SerializeField] private string title;
     private int health;
 
     public int Health
     {
         get => health;
-        set
+        private set
         {
             health = value;
             if (value <= 0)
@@ -18,14 +19,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public int MaxHealth { get; set; }
+    public int MaxHealth => maxHealth;
 
-    public string Title { get; set; }
+    public string Title => title;
 
     public void GetHit(int damage = 1)
     {
         Health -= damage;
     }
 
+    private void Awake()
+    {
+        Health = MaxHealth;
+    }
 }
 

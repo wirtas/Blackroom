@@ -35,7 +35,6 @@ public class PlayerMouseLook : MonoBehaviour
     private void EyeCast()
     {
         if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit eyesightHit, range)) return;
-        Debug.Log(eyesightHit.collider.ToString());
         if (eyesightHit.collider.CompareTag("Enemy"))
         {
             target = eyesightHit.collider.GetComponentInParent<Enemy>();

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
         {
             health = value;
             SetColor(value);
+            if(value<=0) Lose();
         }
     }
     private void Start()
@@ -55,10 +57,15 @@ public class Player : MonoBehaviour
         Health = initHp;
     }
 
-    IEnumerator GetHitTint()
+    private IEnumerator GetHitTint()
     {
         damageTint.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         damageTint.SetActive(false);
+    }
+
+    public static void Lose()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

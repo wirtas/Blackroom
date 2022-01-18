@@ -12,7 +12,7 @@ public class EnemyCanon : Enemy
     private float timeElapsed;
 
     
-    private void Start()
+    private protected void Start()
     {
         Player player = FindObjectOfType<Player>();
         playerPosition = player.transform;

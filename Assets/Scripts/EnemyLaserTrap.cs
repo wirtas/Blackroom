@@ -12,7 +12,6 @@ public class EnemyLaserTrap : MonoBehaviour
 
     private void OnTriggerEnter(Collider hitInfo)
     {
-        Debug.Log($"Enemy{hitInfo.name}");
         if (hitInfo.CompareTag("Player"))
         {
             hitInfo.GetComponent<Player>().GetHit(damage);

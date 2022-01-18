@@ -11,8 +11,8 @@ public class ButtonController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         button.onClick.AddListener(NewGame);
     }
-
-    private void NewGame()
+    
+    private static void NewGame()
     {
         SceneManager.LoadScene("Level_1", LoadSceneMode.Single);
     }

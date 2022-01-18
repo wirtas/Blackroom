@@ -8,6 +8,7 @@ public class ButtonController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         button.onClick.AddListener(NewGame);
     }
 
